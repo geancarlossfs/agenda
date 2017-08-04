@@ -1,6 +1,6 @@
 <?php
     require 'controlador_agenda.php';
-    $contato = editarContato($_GET['id']);
+    $contato = buscarContatoParaEditar($_GET['id']);
 ?>
 
 <!doctype html>
@@ -13,7 +13,7 @@
 </head>
 <body>
 
-    <form method="post" action="">
+    <form method="post" action="controlador_agenda.php?acao=editar">
         <input name="id" readonly  type="text"  value="<?= $contato['id']?>" >
         <input name="nome"     type="text"  value="<?= $contato['nome']?>">
         <input name="email"    type="email" value="<?= $contato['email']?>">

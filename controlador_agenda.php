@@ -1,27 +1,24 @@
 <?php
-
-    function cadastrar($nome){
-
-        $contatosAuxiliar = file_get_contents('contatos.json');
-        $contatosAuxiliar = json_decode($contatosAuxiliar, true);
+    //a função cadastrar vai pegar os dados do formulario
+    function cadastrar($nome, $email, $telefone){
+     $contatosAuxiliar = pegarContatos();//a variavel recebe os dados enviados pelo formulario
 
         $contato = [
             'id'      => uniqid(),
             'nome'    => $nome,
-            'email'   => $_POST['email'],
-            'telefone'=> $_POST['telefone']
+            'email'   => $email,
+            'telefone'=> $telefone
         ];
 
-        array_push($contatosAuxiliar, $contato);
+        array_push($contatosAuxiliar, $contato);//ele incrementa um novo item ao array
+        $contatosJson = json_encode($contatosAuxiliar, JSON_PRETTY_PRINT);//o arquivo Json é convertido em um array
+        file_put_contents('contatos.json', $contatosJson);//salva os dados em um arquivo em .JSON
 
-        $contatosJson = json_encode($contatosAuxiliar, JSON_PRETTY_PRINT);
+        enviar_header();//vai direcionar os dados para a página inicial
 
-        file_put_contents('contatos.json', $contatosJson);
-
-        header("Location: index.phtml");
     }
 
-    function pegarContatos(){
+    function pegarContatos(){//ele pega os dados e le os arquivos json e transforma em um array
         $contatosAuxiliar = file_get_contents('contatos.json');
         $contatosAuxiliar = json_decode($contatosAuxiliar, true);
 
@@ -29,9 +26,7 @@
     }
 
     function excluirContato($id){
-
-        $contatosAuxiliar = file_get_contents('contatos.json');
-        $contatosAuxiliar = json_decode($contatosAuxiliar, true);
+        $contatosAuxiliar=pegarContatos();
 
         foreach ($contatosAuxiliar as $posicao => $contato){
             if($id == $contato['id']) {
@@ -42,13 +37,11 @@
         $contatosJson = json_encode($contatosAuxiliar, JSON_PRETTY_PRINT);
         file_put_contents('contatos.json', $contatosJson);
 
-        header('Location: index.phtml');
+        enviar_header();
     }
 
-    function editarContato($id){
-
-        $contatosAuxiliar = file_get_contents('contatos.json');
-        $contatosAuxiliar = json_decode($contatosAuxiliar, true);
+    function buscarContatoParaEditar($id){
+        $contatosAuxiliar=pegarContatos();
 
         foreach ($contatosAuxiliar as $contato){
             if ($contato['id'] == $id){
@@ -57,31 +50,50 @@
         }
     }
 
-    function salvarContatoEditado($id){
-        $contatosAuxiliar = file_get_contents('contatos.json');
-        $contatosAuxiliar = json_decode($contatosAuxiliar, true);
+    function salvarContatoEditado($id, $nome, $email, $telefone){
+        $contatosAuxiliar=pegarContatos();
 
         foreach ($contatosAuxiliar as $posicao => $contato){
             if ($contato['id'] == $id){
 
-                $contatosAuxiliar[$posicao]['nome'] = $_POST['nome'];
-                $contatosAuxiliar[$posicao]['email'] = $_POST['email'];
-                $contatosAuxiliar[$posicao]['telefone'] = $_POST['telefone'];
+                $contatosAuxiliar[$posicao]['nome']     = $nome;
+                $contatosAuxiliar[$posicao]['email']    = $email;
+                $contatosAuxiliar[$posicao]['telefone'] = $telefone;
 
                 break;
             }
         }
 
+        enviar_header();
+
+
         $contatosJson = json_encode($contatosAuxiliar, JSON_PRETTY_PRINT);
         file_put_contents('contatos.json', $contatosJson);
 
-        header('Location: index.phtml');
 
+        return $contatosJson;
     }
 
-    //ROTAS
-        if ($_GET['acao'] == 'cadastrar'){
-            cadastrar($_POST['nome']);
-        } elseif ($_GET['acao'] == 'excluir'){
-            excluirContato($_GET['id']);
-        }
+    function enviar_header(){
+        header('Location: index.phtml');
+    }
+
+//    function modificaDados(){
+//        $contatosJson = json_encode($contatosAuxiliar, JSON_PRETTY_PRINT);
+//        file_put_contents('contatos.json', $contatosJson);
+//    }
+
+switch($_GET['acao']){
+    case "editar":
+        salvarContatoEditado($_POST['id'], $_POST['nome'], $_POST['email'], $_POST['telefone']);
+        break;
+
+    case "cadastrar":
+        cadastrar($_POST['nome'], $_POST['email'], $_POST['telefone']);
+        break;
+
+    case "excluir":
+        excluirContato($_GET['id']);
+        break;
+
+}
