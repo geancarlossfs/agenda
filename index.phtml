@@ -39,12 +39,7 @@ if (isset($_GET['buscar']) AND !empty($_GET['buscar'])) {
 
     <h3>MINHA AGENDA DE CONTATOS</h3>
 
-    <form method="get">
-        <input type="text" name="buscar">
-        <input type="submit">
-    </form>
-
-    <a href="verifica_usuario.php?acao=sair" class="sair btn btn-default">sair</a>
+<!--    <a href="verifica_usuario.php?acao=sair" class="sair btn btn-default">sair</a>-->
 
     <br />
 
@@ -73,10 +68,7 @@ if (isset($_GET['buscar']) AND !empty($_GET['buscar'])) {
 
                 <button type="submit" class="btn btn-default">CADASTRAR</button>
 
-                <form method="get">
-                    <input type="text" name="buscar">
-                        <input type="submit">
-                </form>
+                <a href="verifica_usuario.php?acao=sair" class="sair btn btn-default">sair</a>
 
             </form>
         </div>
@@ -118,6 +110,14 @@ if (isset($_GET['buscar']) AND !empty($_GET['buscar'])) {
             </table>
         </div>
     </div>
+
+    <div>
+        <form method="get">
+            <input type="text" name="buscar">
+            <input type="submit">
+        </form>
+    </div>
+
 </div>
 </body>
 </html>

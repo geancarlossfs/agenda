@@ -4,15 +4,13 @@ function cadastrar($nome, $email, $telefone){
     $contatosAuxiliar = pegarContatos();//a variavel recebe os dados enviados pelo formulario
 
     $contato = [
-        'id'      => uniqid(),
+        'id'      => uniqid(),//a funçao uniquid() vai gerar uma ID aleatória para cada pessoa cadastrada
         'nome'    => $nome,
         'email'   => $email,
         'telefone'=> $telefone
     ];
 
     array_push($contatosAuxiliar, $contato);//ele incrementa um novo item ao array
-    //$contatosJson = json_encode($contatosAuxiliar, JSON_PRETTY_PRINT);//o arquivo Json é convertido em um array
-    //file_put_contents('contatos.json', $contatosJson);//salva os dados em um arquivo em .JSON
 
     converterJson($contatosAuxiliar);
     enviar_header();//vai direcionar os dados para a página inicial
@@ -26,17 +24,15 @@ function pegarContatos(){//ele pega os dados e le os arquivos json e transforma 
     return $contatosAuxiliar;
 }
 
-function excluirContato($id){
+function excluirContato($id){//a função sera ira pegar o contato pela sua id e excluir ela para não ser mais exibida
     $contatosAuxiliar=pegarContatos();
 
     foreach ($contatosAuxiliar as $posicao => $contato){
-        if($id == $contato['id']) {
-            unset($contatosAuxiliar[$posicao]);
+        if($id == $contato['id']) {//se o id procurado for igual ao contato selecionado
+            unset($contatosAuxiliar[$posicao]);//ele sera excluido pelo unset
         }
     }
 
-//    $contatosJson = json_encode($contatosAuxiliar, JSON_PRETTY_PRINT);
-//    file_put_contents('contatos.json', $contatosJson);
 
     converterJson($contatosAuxiliar);
     enviar_header();
@@ -70,11 +66,6 @@ function salvarContatoEditado($id, $nome, $email, $telefone){
     converterJson($contatosAuxiliar);
     enviar_header();
 
-
-//    $contatosJson = json_encode($contatosAuxiliar, JSON_PRETTY_PRINT);
-//    file_put_contents('contatos.json', $contatosJson);
-
-
     return $contatosJson;
 }
 
@@ -83,17 +74,16 @@ function enviar_header(){
 }
 
 function buscarContato($nome){
-    //Pego os contatos;
-    $contatos = pegarContatos();
 
-    $contatosEncontrados = [];
+    $contatos = pegarContatos();//Pego os contatos;
 
-    //Para cada contatoAuxiliar como contato...;
-    foreach ($contatos as $contato){
-        //Se e o id do contato é o mesmo que estou procurando
-        if ($contato['nome'] == $nome){
-            //retorne para mim o contato com seus dados;
-            $contatosEncontrados[] = $contato;
+    $contatosEncontrados = [];//a variavel vai receber um espaço vazio para ser preenchido logo após ser requerido
+
+    foreach ($contatos as $contato){//Para cada contatoAuxiliar como contato
+
+        if ($contato['nome'] == $nome){//Se e o id do contato é o mesmo que estou procurando
+
+            $contatosEncontrados[] = $contato;//retorna o contato com seus dados;
         }
     }
 
@@ -101,10 +91,10 @@ function buscarContato($nome){
 }
 
 function converterJson($contatosAuxiliar){
-    $contatosJson = json_encode($contatosAuxiliar, JSON_PRETTY_PRINT);
-    file_put_contents('contatos.json', $contatosJson);
+    $contatosJson = json_encode($contatosAuxiliar, JSON_PRETTY_PRINT);//o arquivo Json é convertido em um array
+    file_put_contents('contatos.json', $contatosJson);//salva os dados em um arquivo em .JSON
 }
-
+//Rotas
 switch($_GET['acao']){
     case "editar":
         salvarContatoEditado($_POST['id'], $_POST['nome'], $_POST['email'], $_POST['telefone']);

@@ -1,14 +1,14 @@
-[
-    {
+{
+    "0": {
         "id": "5984b6add3c3f",
         "nome": "Jefferson",
         "email": "jeffeson@mail.com",
         "telefone": "3489249"
     },
-    {
-        "id": "5984b6c891896",
-        "nome": "Canario Belga",
-        "email": "bega@teste.com",
-        "telefone": "237482"
+    "4": {
+        "id": "598af8e6c1620",
+        "nome": "chuchu",
+        "email": "chu@mail.com",
+        "telefone": "3214569888"
     }
-]
+}
