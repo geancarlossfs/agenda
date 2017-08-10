@@ -4,6 +4,13 @@
     <meta charset="UTF-8">
     <link rel="stylesheet" href="style.css">
     <title>login</title>
+    <style>
+
+        body{
+            background-color: #6CA6CD;
+        }
+
+    </style>
 </head>
 <body>
 

@@ -17,7 +17,7 @@ function cadastrar($nome, $email, $telefone){
 
 }
 
-function pegarContatos(){//ele pega os dados e le os arquivos json e transforma em um array
+function pegarContatos(){//ele pega os dados e lê os arquivos json e transforma em um array
     $contatosAuxiliar = file_get_contents('contatos.json');
     $contatosAuxiliar = json_decode($contatosAuxiliar, true);
 

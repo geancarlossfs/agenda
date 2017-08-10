@@ -11,6 +11,7 @@ if (!isset($_SESSION['esta_logado']) OR !$_SESSION['esta_logado'] == true){
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
     <meta charset="UTF-8">
 
     <link rel="stylesheet" href="style.css">
@@ -18,6 +19,7 @@ if (!isset($_SESSION['esta_logado']) OR !$_SESSION['esta_logado'] == true){
     <title>Document</title>
 </head>
 <body>
+
 
 <div class="social">
 
